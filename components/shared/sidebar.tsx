@@ -1,10 +1,16 @@
 'use client'
 import { navLinks } from '@/constants'
-import { SignedIn, SignedOut } from '@clerk/nextjs'
+import {
+    SignInButton,
+    SignedIn,
+    SignedOut,
+    UserButton
+} from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import { Button } from "@/components/ui/button"
+
 
 const Sidebar = () => {
     const pathname = usePathname();
@@ -23,13 +29,14 @@ const Sidebar = () => {
 
 
                 <nav className='sidebar-nav'>
+                    {/* Render links if a user is signed in */}
                     <SignedIn>
                         <ul className='sidebar-nav_elements'>
                             {navLinks.map((link) => {
                                 const isActive = link.route === pathname;
 
                                 return (
-                                    <li key={link.route} className={`sidebar-nav_element group $ {isActive ? 'bg-purple-gradient text-white' : 'text-gray-700' }`}>
+                                    <li key={link.route} className={`sidebar-nav_element group ${isActive ? 'bg-purple-gradient text-white' : 'text-gray-700'}`}>
                                         <Link className='sidebar-link' href={link.route}>
                                             <Image
                                                 src={link.icon}
@@ -43,11 +50,23 @@ const Sidebar = () => {
                                     </li>
                                 )
                             })}
+
+                            <li className='flex-center cursor-pointer gap-2 p-4'>
+                                <SignedOut>
+                                    <SignInButton />
+                                </SignedOut>
+                                <SignedIn>
+                                    <UserButton showName />
+                                </SignedIn>
+                            </li>
                         </ul>
                     </SignedIn>
 
+                    {/* Render  if a user is signed out */}
                     <SignedOut>
-
+                        <Button asChild className='button bg-purple-gradient bg-cover' variant="outline">
+                            <Link href='/sign-in'>Login</Link>
+                        </Button>
                     </SignedOut>
                 </nav>
             </div>
