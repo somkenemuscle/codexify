@@ -60,8 +60,8 @@ export async function POST(req: Request) {
       clerkId: id,
       email: email_addresses[0].email_address,
       username: username!,
-      firstName: first_name || "",
-      lastName: last_name || "",
+      firstName: first_name ?? "",  // Use nullish coalescing operator to provide default empty string if null
+      lastName: last_name ?? "", 
       photo: image_url,
     };
 
@@ -78,6 +78,9 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "OK", user: newUser });
   }
+
+
+
 
   // Handle user update event
   if (eventType === "user.updated") {
@@ -96,6 +99,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "OK", user: updatedUser });
   }
 
+
+
+  
   // Handle user deletion event
   if (eventType === "user.deleted") {
     const { id } = evt.data;
