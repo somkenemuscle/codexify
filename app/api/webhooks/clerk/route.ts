@@ -101,7 +101,7 @@ export async function POST(req: Request) {
 
 
 
-  
+
   // Handle user deletion event
   if (eventType === "user.deleted") {
     const { id } = evt.data;

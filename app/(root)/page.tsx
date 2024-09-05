@@ -1,7 +1,3 @@
-import React from 'react'
-import {
- 
-} from '@clerk/nextjs'
 
 function Home() {
   return (
